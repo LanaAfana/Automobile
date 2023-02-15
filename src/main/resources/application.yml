@@ -1,0 +1,14 @@
+spring:
+  datasource:
+#    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+
+#    pool:
+#      initial-size: 3
+#      max-size: 10
+#      max-idle-time: 30m
+  jooq:
+    sql-dialect: postgres
+
