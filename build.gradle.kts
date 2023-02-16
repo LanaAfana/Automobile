@@ -2,11 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import nu.studer.gradle.jooq.JooqEdition
 
 plugins {
-    id("org.springframework.boot") version "3.0.2"
+    id("org.springframework.boot") version "2.7.6"
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
-    id("nu.studer.jooq") version ("6.0.1")
+    id("nu.studer.jooq") version ("7.1.1") // нужно использовать более свежую версию плагина
 }
 
 group = "com.lanaafana"
@@ -25,9 +25,10 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     jooqGenerator("org.postgresql:postgresql:42.3.1")
+    jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
     runtimeOnly ("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("com.google.code.gson:gson:2.8.8")
+    // implementation("com.google.code.gson:gson:2.8.8")  - зачем gson, если уже подключен jackson?
 }
 
 tasks.withType<KotlinCompile> {
@@ -42,6 +43,7 @@ tasks.withType<Test> {
 }
 
 jooq {
+    version.set("3.16.7") // нужно явно указывать используюмую версию
     edition.set(JooqEdition.OSS)
 
     configurations {
@@ -67,7 +69,8 @@ jooq {
                         inputSchema = "public"
                     }
                     target.apply {
-                        packageName = "com.lanaafana.automobile.domain"
+                        packageName = "com.lanaafana.automobile.jooq"
+                        directory = "src/main/java"
                     }
                     strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
                 }

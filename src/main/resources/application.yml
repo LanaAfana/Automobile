@@ -12,3 +12,14 @@ spring:
   jooq:
     sql-dialect: postgres
 
+  jackson:
+    default-property-inclusion: always
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      adjust-dates-to-context-time-zone: false
+      fail-on-null-for-primitives: false
+      fail-on-unknown-properties: false
+    mapper:
+      accept-case-insensitive-properties: true
+    serialization:
+      write-dates-as-timestamps: false
